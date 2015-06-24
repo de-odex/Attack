@@ -6,7 +6,7 @@ def read1(var, line):
 		var = int(data[line])
 		readfile.close()
 	except IOError:
-		print("No file.")
+		print("No value.")
 	except ValueError:
 		print("Error reading save. Restarting...")
 	
