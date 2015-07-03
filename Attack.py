@@ -1,11 +1,44 @@
 # Made by KJ Ramos
 import sys
 import random
-from save import read1
-from save import save
-from save import save1
+import os.path
 print("Attack")
 print("Instructions: fight the enemy until you or he dies. Tip: a medpack gives 25 hp")
+def read1(var, line):
+	try:
+		readfile = open("save.txt", "r")
+		data = readfile.readlines()
+		var = int(data[line])
+		readfile.close()
+	except IOError:
+		print("No value.")
+	except ValueError:
+		print("Error reading save. Restarting...")
+
+	return var
+
+
+def save2(var):
+	try:
+		readfile = open("save.txt", "a")
+		readfile.write(str(var) + "\n")
+		readfile.close()
+	except IOError:
+		print("Unable to save.")
+
+def save1(var):
+	try:
+		PATH = "./save.txt"
+		if os.path.isfile(PATH):
+			readfile = open("save.txt", "w")
+			readfile.write(str(var) + "\n")
+			readfile.close()
+		else:
+			readfile = open("save.txt", "a")
+			readfile.write(str(var) + "\n")
+			readfile.close()
+	except IOError:
+		print("Unable to save.")
 done = False
 health=100
 enemy=100
@@ -37,7 +70,7 @@ ai_attack4 = read1(ai_attack4, 11)
 ai_nrg = read1(ai_nrg, 12)
 ai_med = read1(ai_med, 13)
 turn = read1(turn, 14)
-while not done:	
+while not done:
 	while health > 0 and enemy > 0:
 		if turn == 1:
 			random_number = random.randint(1, 100)
@@ -145,7 +178,7 @@ while not done:
 						turn = 0
 					elif random_number > 60 or med == 0:
 						print("You failed to heal!")
-						
+
 						print("You have " + str(med) + " more medpacks")
 						turn = 0
 			elif input_number == 3:
@@ -162,23 +195,23 @@ while not done:
 				print("Nothing here yet!")
 			elif input_number == 5:
 				save1(health)
-				save(enemy)
-				save(med)
-				save(nrg)
-				save(attack1)
-				save(attack2)
-				save(attack3)
-				save(attack4)
-				save(ai_attack1)
-				save(ai_attack2)
-				save(ai_attack3)
-				save(ai_attack4)
-				save(ai_nrg)
-				save(ai_med)
-				save(turn)
+				save2(enemy)
+				save2(med)
+				save2(nrg)
+				save2(attack1)
+				save2(attack2)
+				save2(attack3)
+				save2(attack4)
+				save2(ai_attack1)
+				save2(ai_attack2)
+				save2(ai_attack3)
+				save2(ai_attack4)
+				save2(ai_nrg)
+				save2(ai_med)
+				save2(turn)
 				print("Bye!")
 				sys.exit()
-				
+
 		if turn == 0:
 			ai_number = random.randint(1, 2)
 			ai_attack = random.randint(1, 4)
@@ -274,20 +307,20 @@ while not done:
 		ai_med=5
 		turn=1
 		save1(health)
-		save(enemy)
-		save(med)
-		save(nrg)
-		save(attack1)
-		save(attack2)
-		save(attack3)
-		save(attack4)
-		save(ai_attack1)
-		save(ai_attack2)
-		save(ai_attack3)
-		save(ai_attack4)
-		save(ai_nrg)
-		save(ai_med)
-		save(turn)
+		save2(enemy)
+		save2(med)
+		save2(nrg)
+		save2(attack1)
+		save2(attack2)
+		save2(attack3)
+		save2(attack4)
+		save2(ai_attack1)
+		save2(ai_attack2)
+		save2(ai_attack3)
+		save2(ai_attack4)
+		save2(ai_nrg)
+		save2(ai_med)
+		save2(turn)
 	elif enemy <= 0 and health != 0:
 		print("You killed him!")
 		print("Game Over!")
@@ -308,17 +341,17 @@ while not done:
 		ai_med=5
 		turn=1
 		save1(health)
-		save(enemy)
-		save(med)
-		save(nrg)
-		save(attack1)
-		save(attack2)
-		save(attack3)
-		save(attack4)
-		save(ai_attack1)
-		save(ai_attack2)
-		save(ai_attack3)
-		save(ai_attack4)
-		save(ai_nrg)
-		save(ai_med)
-		save(turn)
+		save2(enemy)
+		save2(med)
+		save2(nrg)
+		save2(attack1)
+		save2(attack2)
+		save2(attack3)
+		save2(attack4)
+		save2(ai_attack1)
+		save2(ai_attack2)
+		save2(ai_attack3)
+		save2(ai_attack4)
+		save2(ai_nrg)
+		save2(ai_med)
+		save2(turn)
