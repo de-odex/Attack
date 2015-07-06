@@ -14,7 +14,8 @@ def read1(var, line):
 		print("No value.")
 	except ValueError:
 		print("Error reading save. Restarting...")
-
+	except:
+		print("Please delete save.txt. Thank you.")
 	return var
 
 
@@ -42,6 +43,7 @@ def save1(var):
 done = False
 health=100
 enemy=100
+dollas=0
 med=5
 nrg=3
 attack1=10
@@ -55,27 +57,42 @@ ai_attack4=5
 ai_nrg=3
 ai_med=5
 turn=1
+bank=0
 health = read1(health, 0)
 enemy = read1(enemy, 1)
-med = read1(med, 2)
-nrg = read1(nrg, 3)
-attack1 = read1(attack1, 4)
-attack2 = read1(attack2, 5)
-attack3 = read1(attack3, 6)
-attack4 = read1(attack4, 7)
-ai_attack1 = read1(ai_attack1, 8)
-ai_attack2 = read1(ai_attack2, 9)
-ai_attack3 = read1(ai_attack3, 10)
-ai_attack4 = read1(ai_attack4, 11)
-ai_nrg = read1(ai_nrg, 12)
-ai_med = read1(ai_med, 13)
-turn = read1(turn, 14)
+dollas = read1(dollas, 2)
+med = read1(med, 3)
+nrg = read1(nrg, 4)
+attack1 = read1(attack1, 5)
+attack2 = read1(attack2, 6)
+attack3 = read1(attack3, 7)
+attack4 = read1(attack4, 8)
+ai_attack1 = read1(ai_attack1, 9)
+ai_attack2 = read1(ai_attack2, 10)
+ai_attack3 = read1(ai_attack3, 11)
+ai_attack4 = read1(ai_attack4, 12)
+ai_nrg = read1(ai_nrg, 13)
+ai_med = read1(ai_med, 14)
+turn = read1(turn, 15)
+bank = read1(bank, 16)
+if health > 100:
+	health=100
+	enemy=100
+if attack1 > 10 or attack2 > 30 or attack3 > 30 or attack4 > 5:
+	attack1=10
+	attack2=30
+	attack3=30
+	attack4=5
+	ai_attack1=10
+	ai_attack2=30
+	ai_attack3=30
+	ai_attack4=5
 while not done:
 	while health > 0 and enemy > 0:
 		if turn == 1:
 			random_number = random.randint(1, 100)
 			print("--------------------------------------------------------------------------------", end="")
-			input_number = input("Attack, use items, check stats, buy, or save&exit (1, 2, 3, 4, or 5 respectively): ")
+			input_number = input("Attack, use items, check stats, bank&buy, or save&exit (1, 2, 3, 4, or 5 respectively): ")
 			try:
 				input_number = int(input_number)
 			except ValueError:
@@ -183,6 +200,8 @@ while not done:
 						turn = 0
 			elif input_number == 3:
 				print("You checked your stats!")
+				print("You have {:} dollars".format(dollas))
+				print("You have {:} dollars in your bank".format(bank))
 				print("You have {:2} medpacks".format(med))
 				print("You have {:2} NRG drinks".format(nrg))
 				print("You have {:2} energy for attack 1".format(attack1))
@@ -192,10 +211,53 @@ while not done:
 				print("Your health is: {:2}".format(health))
 				print("The enemy's health is: {:2}".format(enemy))
 			elif input_number == 4:
-				print("Nothing here yet!")
+				borb = input("Bank or buy? (1/2): ")
+				try:
+					borb = int(borb)
+				except ValueError:
+					print("Number please!")
+				if borb == 1:
+					dorw = input("Deposit or withdraw? (1/2): ")
+					try:
+						dorw = int(dorw)
+					except ValueError:
+						print("Number please!")
+					if dorw == 1:
+						depamt = input("How much?: ")
+						try:
+							depamt = int(depamt)
+						except ValueError:
+							print("Number please!")
+						if depamt>dollas:
+							print("Too much! Depositing all!")
+							print("Depositing money...")
+							bank=bank+dollas
+							dollas=0
+						else:
+							dollas=dollas-depamt
+							print("Depositing money...")
+							bank=bank+depamt
+					elif dorw == 2:
+						wthamt = input("How much?: ")
+						try:
+							wthamt = int(wthamt)
+						except ValueError:
+							print("Number please!")
+						if wthamt>bank:
+							print("Too much! Withdrawing all!")
+							print("Withdrawing money...")
+							dollas=dollas+bank
+							bank=0
+						else:
+							bank=bank-wthamt
+							print("Withdrawing money...")
+							dollas=dollas+wthamt
+				elif borb == 2:
+					print("None yet!")
 			elif input_number == 5:
 				save1(health)
 				save2(enemy)
+				save2(dollas)
 				save2(med)
 				save2(nrg)
 				save2(attack1)
@@ -209,6 +271,7 @@ while not done:
 				save2(ai_nrg)
 				save2(ai_med)
 				save2(turn)
+				save2(bank)
 				print("Bye!")
 				sys.exit()
 
@@ -219,13 +282,13 @@ while not done:
 			event = random.randint(1, 100)
 			if ai_number == 1:
 				if ai_attack == 1 and ai_attack1 < 1:
-					print()
+					a=1
 				elif ai_attack == 2 and ai_attack2 < 1:
-					print()
+					a=1
 				elif ai_attack == 3 and ai_attack3 < 1:
-					print()
+					a=1
 				elif ai_attack == 4 and ai_attack4 < 1 and enemy > 15:
-					print()
+					a=1
 				elif ai_attack == 1 and ai_attack1 >= 1 and ai_attack2 == 0 and ai_attack3 == 0 and ai_attack4 == 0:
 					if event < 80 and event >= 1:
 						print("He hit you with his backup attack!")
@@ -264,9 +327,9 @@ while not done:
 				elif ai_attack == 4 and ai_attack4 >= 1 and enemy <= 15:
 					if event < 20 and event >= 1:
 						ai_spcl_attack = random.randint(60, 75)
-						print("He hit you with your special attack!")
+						print("He hit you with his special attack!")
 						health = health - ai_spcl_attack
-						print("It caused " + str(spcl_attack) + " damage!")
+						print("It caused " + str(ai_spcl_attack) + " damage!")
 						ai_attack4-=1
 						turn = 1
 					elif event >= 20:
@@ -286,13 +349,13 @@ while not done:
 					ai_attack4 = 5
 					turn = 1
 			elif ai_number == 2:
-				print()
-	if health <= 0 and enemy != 0:
+				a=1
+	if health <= 0 and enemy > 0:
 		print("You died!")
-		print("Game Over!")
-		done = True
+		print("Respawn!")
 		health=100
 		enemy=100
+		dollas=0
 		med=5
 		nrg=3
 		attack1=10
@@ -308,6 +371,7 @@ while not done:
 		turn=1
 		save1(health)
 		save2(enemy)
+		save2(dollas)
 		save2(med)
 		save2(nrg)
 		save2(attack1)
@@ -321,18 +385,14 @@ while not done:
 		save2(ai_nrg)
 		save2(ai_med)
 		save2(turn)
-	elif enemy <= 0 and health != 0:
+		save2(bank)
+	elif enemy <= 0 and health > 0:
 		print("You killed him!")
-		print("Game Over!")
-		done = True
-		health=100
+		mons=random.randint(600,1000)
+		print("You gained " + str(mons) + " money!")
+		print("Another person approaches you!")
 		enemy=100
-		med=5
-		nrg=3
-		attack1=10
-		attack2=30
-		attack3=30
-		attack4=5
+		dollas=dollas+mons
 		ai_attack1=10
 		ai_attack2=30
 		ai_attack3=30
@@ -342,6 +402,7 @@ while not done:
 		turn=1
 		save1(health)
 		save2(enemy)
+		save2(dollas)
 		save2(med)
 		save2(nrg)
 		save2(attack1)
@@ -355,3 +416,4 @@ while not done:
 		save2(ai_nrg)
 		save2(ai_med)
 		save2(turn)
+		save2(bank)
