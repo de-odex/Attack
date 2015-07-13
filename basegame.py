@@ -2,6 +2,12 @@ import sys
 import random
 import os.path
 import os
+def end():
+	enter=input("Press Enter to continue...")
+	if enter == "":
+		sys.exit()
+def enter():
+	enter1=input("Press Enter to continue...")
 def clr():
 	os.system('cls')
 def read1(var, line):
@@ -11,11 +17,12 @@ def read1(var, line):
 		var = int(data[line])
 		readfile.close()
 	except IOError:
-		print("No value.")
+		print("a")
 	except ValueError:
-		print("Error reading save. Restarting...")
+		print("e")
+		readfile1 = open("save.txt", "w")
 	except:
-		print("Please delete save.txt. Thank you.")
+		print("v")
 	return var
 def save2(var):
 	try:
@@ -38,6 +45,9 @@ def save1(var):
 	except IOError:
 		print("Unable to save.")
 def game():
+	print("Attack")
+	print("Instructions: fight the enemy until you or he dies.")
+	print("This game autosaves. Do not close the game if you don't see <>.")
 	done = False
 	health=100
 	enemy=100
@@ -56,6 +66,7 @@ def game():
 	ai_med=5
 	turn=1
 	bank=0
+	kills=0
 	health = read1(health, 0)
 	enemy = read1(enemy, 1)
 	dollas = read1(dollas, 2)
@@ -73,6 +84,7 @@ def game():
 	ai_med = read1(ai_med, 14)
 	turn = read1(turn, 15)
 	bank = read1(bank, 16)
+	kills = read1(kills, 17)
 	if health > 100:
 		health=100
 		enemy=100
@@ -87,9 +99,10 @@ def game():
 		ai_attack4=5
 	while not done:
 		while health > 0 and enemy > 0:
-			if turn == 1:
+			while turn == 1:
 				random_number = random.randint(1, 100)
-				print("--------------------------------------------------------------------------------", end="")
+				enter()
+				clr()
 				print("Hi! Stats:")
 				print("Your health is: {:2}".format(health))
 				print("The enemy's health is: {:2}".format(enemy))
@@ -101,10 +114,30 @@ def game():
 				print("You have {:2} energy for attack 2".format(attack2))
 				print("You have {:2} energy for attack 3".format(attack3))
 				print("You have {:2} energy for attack 4".format(attack4))
-				input_number = input("Attack, use items, buy, or save&exit (1, 2, 3, or 4 respectively): ")
+				save1(health)
+				save2(enemy)
+				save2(dollas)
+				save2(med)
+				save2(nrg)
+				save2(attack1)
+				save2(attack2)
+				save2(attack3)
+				save2(attack4)
+				save2(ai_attack1)
+				save2(ai_attack2)
+				save2(ai_attack3)
+				save2(ai_attack4)
+				save2(ai_nrg)
+				save2(ai_med)
+				save2(turn)
+				save2(bank)
+				save2(kills)
+				print("<>")
+				input_number = input("Attack, use items, buy, or exit (1, 2, 3, or 4 respectively): ")
 				try:
 					input_number = int(input_number)
 				except ValueError:
+					clr()
 					print("Number please!")
 				if input_number == 1:
 					clr()
@@ -117,6 +150,7 @@ def game():
 					try:
 						attack_number = int(attack_number)
 					except ValueError:
+						clr()
 						print("Number please!")
 					if attack_number == 1 and attack1 < 1:
 						print("No more uses!")
@@ -186,6 +220,7 @@ def game():
 					try:
 						item_number = int(item_number)
 					except ValueError:
+						clr()
 						print("Number please!")
 					if item_number == 1:
 						clr()
@@ -224,6 +259,7 @@ def game():
 					try:
 						buy_number = int(buy_number)
 					except ValueError:
+						clr()
 						print("Number please!")
 					if buy_number == 1:
 						nrg_price = 50
@@ -231,6 +267,7 @@ def game():
 						try:
 							nrg_num = int(nrg_num)
 						except ValueError:
+							clr()
 							print("Number please!")
 						if nrg_price * nrg_num > dollas:
 							print("Not enough money!")
@@ -243,6 +280,7 @@ def game():
 						try:
 							med_num = int(med_num)
 						except ValueError:
+							clr()
 							print("Number please!")
 						if med_price * med_num > dollas:
 							print("Not enough money!")
@@ -258,27 +296,11 @@ def game():
 							health = 100
 				elif input_number == 4:
 					clr()
-					save1(health)
-					save2(enemy)
-					save2(dollas)
-					save2(med)
-					save2(nrg)
-					save2(attack1)
-					save2(attack2)
-					save2(attack3)
-					save2(attack4)
-					save2(ai_attack1)
-					save2(ai_attack2)
-					save2(ai_attack3)
-					save2(ai_attack4)
-					save2(ai_nrg)
-					save2(ai_med)
-					save2(turn)
-					save2(bank)
 					print("Bye!")
+					enter()
 					sys.exit()
 
-			if turn == 0:
+			while turn == 0:
 				ai_number = random.randint(1, 2)
 				ai_attack = random.randint(1, 4)
 				ai_item = random.randint(1, 2)
@@ -286,12 +308,16 @@ def game():
 				if ai_number == 1:
 					if ai_attack == 1 and ai_attack1 < 1:
 						a=1
+						turn = 0
 					elif ai_attack == 2 and ai_attack2 < 1:
 						a=1
+						turn = 0
 					elif ai_attack == 3 and ai_attack3 < 1:
 						a=1
+						turn = 0
 					elif ai_attack == 4 and ai_attack4 < 1 and enemy > 15:
 						a=1
+						turn = 0
 					elif ai_attack == 1 and ai_attack1 >= 1 and ai_attack2 == 0 and ai_attack3 == 0 and ai_attack4 == 0:
 						if event < 80 and event >= 1:
 							print("He hit you with his backup attack!")
@@ -339,22 +365,22 @@ def game():
 							print("He missed!")
 							ai_attack4-=1
 							turn = 1
-				elif ai_number == 2 and enemy <= 15 and ai_med > 0 and ai_nrg > 0:
-					if ai_item == 1 and enemy <= 15:
-						ai_med -= 1
-						enemy += 25
-						turn = 1
-					elif ai_item == 2 and attack1 == 0 and attack2 == 0 and attack3 == 0 and attack4 == 0:
-						ai_nrg -= 1
-						ai_attack1 = 10
-						ai_attack2 = 30
-						ai_attack3 = 30
-						ai_attack4 = 5
-						turn = 1
+				elif ai_number == 2 and enemy <= 15 and ai_med > 0 and ai_item == 1 and enemy <= 15:
+					ai_med -= 1
+					enemy += 25
+					turn = 1
+				elif ai_number == 2 and ai_nrg > 0 and ai_item == 2 and attack1 == 0 and attack2 == 0 and attack3 == 0 and attack4 == 0:
+					ai_nrg -= 1
+					ai_attack1 = 10
+					ai_attack2 = 30
+					ai_attack3 = 30
+					ai_attack4 = 5
+					turn = 1
 				elif ai_number == 2:
 					a=1
-		if health <= 0 and enemy > 0 and bank >= -500:
-			print("You died!")
+					turn = 0
+		if health <= 0 and bank >= -500:
+			print("You blacked out!")
 			print("The hospital healed you back up!")
 			health=100
 			enemy=100
@@ -390,6 +416,47 @@ def game():
 			save2(ai_med)
 			save2(turn)
 			save2(bank)
+			save2(kills)
+		elif bank >= 5000:
+			print("You win!")
+			print("Game over!")
+			health=100
+			enemy=100
+			dollas=0
+			med=5
+			nrg=3
+			attack1=10
+			attack2=30
+			attack3=30
+			attack4=5
+			ai_attack1=10
+			ai_attack2=30
+			ai_attack3=30
+			ai_attack4=5
+			ai_nrg=3
+			ai_med=5
+			turn=1
+			bank=0
+			kills=0
+			save1(health)
+			save2(enemy)
+			save2(dollas)
+			save2(med)
+			save2(nrg)
+			save2(attack1)
+			save2(attack2)
+			save2(attack3)
+			save2(attack4)
+			save2(ai_attack1)
+			save2(ai_attack2)
+			save2(ai_attack3)
+			save2(ai_attack4)
+			save2(ai_nrg)
+			save2(ai_med)
+			save2(turn)
+			save2(bank)
+			save2(kills)
+			end()
 		elif enemy <= 0 and health > 0:
 			print("You killed him!")
 			mons=random.randint(600,1000)
@@ -421,10 +488,13 @@ def game():
 			save2(ai_med)
 			save2(turn)
 			save2(bank)
+			save2(kills)
+			enter()
 			binp = input("Do you wanna bank your money? (1/0): ")
 			try:
 				binp = int(binp)
 			except ValueError:
+				clr()
 				print("Number please!")
 			if binp == 1:
 				clr()
@@ -432,16 +502,20 @@ def game():
 				try:
 					dorw = int(dorw)
 				except ValueError:
+					clr()
 					print("Number please!")
 				if dorw == 1:
 					clr()
 					print("You have {:} dollars".format(dollas))
 					print("You have {:} dollars in your bank".format(bank))
+					recdep = dollas - 500
+					print("It's recommended to deposit " + str(recdep) + " dollars for full heal use.")
 					depamt = input("How much?: ")
 					clr()
 					try:
 						depamt = int(depamt)
 					except ValueError:
+						clr()
 						print("Number please!")
 					if depamt>dollas:
 						print("Too much! Depositing all!")
@@ -458,11 +532,14 @@ def game():
 					clr()
 					print("You have {:} dollars".format(dollas))
 					print("You have {:} dollars in your bank".format(bank))
+					recwth = 500 - dollas
+					print("It's recommended to withdraw " + str(recwth) + " dollars for full heal use (if the number's negative disregard)")
 					wthamt = input("How much?: ")
 					clr()
 					try:
 						wthamt = int(wthamt)
 					except ValueError:
+						clr()
 						print("Number please!")
 					if wthamt>bank:
 						print("Too much! Withdrawing all!")
@@ -496,6 +573,7 @@ def game():
 			ai_med=5
 			turn=1
 			bank=0
+			kills=0
 			save1(health)
 			save2(enemy)
 			save2(dollas)
@@ -513,4 +591,5 @@ def game():
 			save2(ai_med)
 			save2(turn)
 			save2(bank)
-			sys.exit()
+			save2(kills)
+			end()
