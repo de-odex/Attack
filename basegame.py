@@ -119,7 +119,7 @@ def game():
 					a=1
 					a=1
 					a=1
-					xplevel=xplevel+35
+					xplevel=xplevel+35+(5*level)
 				print("Hi! Stats:")
 				print("Your health is: {:2}".format(health))
 				print("The enemy's health is: {:2}".format(enemy))
@@ -495,7 +495,7 @@ def game():
 		elif enemy <= 0 and health > 0:
 			print("You killed him!")
 			mons=random.randint(600,1000)
-			xpadd=random.randint(1,20)
+			xpadd=random.randint(20,30)
 			print("You gained " + str(mons) + " money!")
 			print("You gained " + str(xpadd) + " xp!")
 			print("Another person approaches you!")
