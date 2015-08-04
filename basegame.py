@@ -125,6 +125,29 @@ def game():
 				print("The enemy's health is: {:2}".format(enemy))
 				print("You're at level {:}".format(lvl))
 				print("You have {:}/{:} xp".format(xp, xplevel))
+				percent = xp/xplevel
+				percent = round(percent, 3)
+				percent = percent*100
+				if percent > 90:
+					print("<---------|>")
+				elif percent > 80 and percent <= 90:
+					print("<--------|->")
+				elif percent > 70 and percent <= 80:
+					print("<-------|-->")
+				elif percent > 60 and percent <= 70:
+					print("<------|--->")
+				elif percent > 50 and percent <= 60:
+					print("<-----|---->")
+				elif percent > 40 and percent <= 50:
+					print("<----|----->")
+				elif percent > 30 and percent <= 40:
+					print("<---|------>")
+				elif percent > 20 and percent <= 30:
+					print("<--|------->")
+				elif percent > 10 and percent <= 20:
+					print("<-|-------->")
+				elif percent > 0 and percent <= 10:
+					print("<|--------->")
 				print("You have {:} dollars".format(dollas))
 				print("You have {:} dollars in your bank".format(bank))
 				print("You have {:2} medpacks".format(med))
