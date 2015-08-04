@@ -2,6 +2,8 @@ import sys
 import random
 import os.path
 import os
+#the tattoos (;)
+#kim
 def end():
 	enter=input("Press Enter to continue...")
 	if enter == "":
@@ -49,6 +51,7 @@ def game():
 	print("Instructions: fight the enemy until you or he dies.")
 	print("This game autosaves. Do not close the game if you don't see <>.")
 	done = False
+	lvl=0
 	health=100
 	enemy=100
 	dollas=0
@@ -67,6 +70,9 @@ def game():
 	turn=1
 	bank=0
 	kills=0
+	xp=0
+	xplevel=50
+	lvl = read1(lvl, 19)
 	health = read1(health, 0)
 	enemy = read1(enemy, 1)
 	dollas = read1(dollas, 2)
@@ -85,8 +91,12 @@ def game():
 	turn = read1(turn, 15)
 	bank = read1(bank, 16)
 	kills = read1(kills, 17)
-	if health > 100:
-		health=100
+	xp = read1(xp, 18)
+	xplevel = read1(xplevel, 20)
+	healthmod=25*lvl
+	health=health+healthmod
+	if health > 100+healthmod:
+		health=100+healthmod
 		enemy=100
 	if attack1 > 10 or attack2 > 30 or attack3 > 30 or attack4 > 5:
 		attack1=10
@@ -103,9 +113,18 @@ def game():
 				random_number = random.randint(1, 100)
 				enter()
 				clr()
+				if xp >= xplevel:
+					lvl = lvl+1
+					xp=xp-xplevel
+					a=1
+					a=1
+					a=1
+					xplevel=xplevel+35
 				print("Hi! Stats:")
 				print("Your health is: {:2}".format(health))
 				print("The enemy's health is: {:2}".format(enemy))
+				print("You're at level {:}".format(lvl))
+				print("You have {:}/{:} xp".format(xp, xplevel))
 				print("You have {:} dollars".format(dollas))
 				print("You have {:} dollars in your bank".format(bank))
 				print("You have {:2} medpacks".format(med))
@@ -114,6 +133,7 @@ def game():
 				print("You have {:2} energy for attack 2".format(attack2))
 				print("You have {:2} energy for attack 3".format(attack3))
 				print("You have {:2} energy for attack 4".format(attack4))
+				print("You killed {:} people".format(kills))
 				save1(health)
 				save2(enemy)
 				save2(dollas)
@@ -132,6 +152,9 @@ def game():
 				save2(turn)
 				save2(bank)
 				save2(kills)
+				save2(xp)
+				save2(lvl)
+				save2(xplevel)
 				print("<>")
 				input_number = input("Attack, use items, buy, or exit (1, 2, 3, or 4 respectively): ")
 				try:
@@ -293,7 +316,7 @@ def game():
 							print("Not enough money!")
 						elif heal_price <= dollas:
 							dollas = dollas - heal_price
-							health = 100
+							health = 100+healthmod
 				elif input_number == 4:
 					clr()
 					print("Bye!")
@@ -417,7 +440,11 @@ def game():
 			save2(turn)
 			save2(bank)
 			save2(kills)
-		elif bank >= 5000:
+			save2(xp)
+			save2(lvl)
+			save2(xplevel)
+			health=health+healthmod
+		elif lvl >= 50:
 			print("You win!")
 			print("Game over!")
 			health=100
@@ -438,6 +465,10 @@ def game():
 			turn=1
 			bank=0
 			kills=0
+			xp=0
+			lvl=0
+			xplevel=50
+			amazingfeat=9001
 			save1(health)
 			save2(enemy)
 			save2(dollas)
@@ -456,11 +487,17 @@ def game():
 			save2(turn)
 			save2(bank)
 			save2(kills)
+			save2(xp)
+			save2(lvl)
+			save2(xplevel)
+			save2(amazingfeat)
 			end()
 		elif enemy <= 0 and health > 0:
 			print("You killed him!")
 			mons=random.randint(600,1000)
+			xpadd=random.randint(1,20)
 			print("You gained " + str(mons) + " money!")
+			print("You gained " + str(xpadd) + " xp!")
 			print("Another person approaches you!")
 			enemy=100
 			dollas=dollas+mons
@@ -471,6 +508,9 @@ def game():
 			ai_nrg=3
 			ai_med=5
 			turn=1
+			kills=kills+1
+			xpadd=random.randint(5,20)
+			xp=xp+xpadd
 			save1(health)
 			save2(enemy)
 			save2(dollas)
@@ -489,13 +529,17 @@ def game():
 			save2(turn)
 			save2(bank)
 			save2(kills)
+			save2(xp)
+			save2(lvl)
+			save2(xplevel)
 			enter()
-			binp = input("Do you wanna bank your money? (1/0): ")
+			binp = input("Do you want to bank your money? (1/0): ")
 			try:
 				binp = int(binp)
 			except ValueError:
 				clr()
 				print("Number please!")
+				binp=1
 			if binp == 1:
 				clr()
 				dorw = input("Deposit or withdraw? (1/2): ")
@@ -504,6 +548,7 @@ def game():
 				except ValueError:
 					clr()
 					print("Number please!")
+					dorw=1
 				if dorw == 1:
 					clr()
 					print("You have {:} dollars".format(dollas))
@@ -515,8 +560,7 @@ def game():
 					try:
 						depamt = int(depamt)
 					except ValueError:
-						clr()
-						print("Number please!")
+						depamt=recdep
 					if depamt>dollas:
 						print("Too much! Depositing all!")
 						print("Depositing money...")
@@ -574,6 +618,9 @@ def game():
 			turn=1
 			bank=0
 			kills=0
+			xp=0
+			lvl=0
+			xplevel=50
 			save1(health)
 			save2(enemy)
 			save2(dollas)
@@ -592,4 +639,7 @@ def game():
 			save2(turn)
 			save2(bank)
 			save2(kills)
+			save2(xp)
+			save2(lvl)
+			save2(xplevel)
 			end()
