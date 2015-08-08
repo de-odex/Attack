@@ -34,6 +34,20 @@ def read1(var, line):
 	except:
 		print("v")
 	return var
+def read1(var, line):
+	try:
+		readfile = open("latest.txt", "r")
+		data = readfile.readlines()
+		var = int(data[line])
+		readfile.close()
+	except IOError:
+		print("a")
+	except ValueError:
+		print("e")
+		readfile1 = open("latest.txt", "w")
+	except:
+		print("v")
+	return var
 def save2(var):
 	try:
 		readfile = open("save.txt", "a")
@@ -55,7 +69,7 @@ def save1(var):
 	except IOError:
 		print("Unable to save.")
 def update():
-	print("Updating...")
+	readver(latest, 0)
 	os.mkdir("C:\\Attack\\temp\\")
 	os.mkdir("C:\\Attack\\update\\")
 	urllib.request.urlretrieve('https://github.com/de-odex/Attack/archive/master.zip', 'C:\\Attack\\temp\\Attack_update.zip')
@@ -63,15 +77,31 @@ def update():
 	destinationPath = "C:\\Attack\\update"
 	sourceZip = zipfile.ZipFile(fullpathToZip, 'r')
 	for name in sourceZip.namelist():
-		if name.find('.py')!= -1:
+		if name.find('.txt')!= -1:
 			sourceZip.extract(name, destinationPath)
 			sourceZip.close()
-	shutil.copy('C:\\Attack\\update\\Attack-master\\basegame.py', 'C:\\Attack\\')
+	shutil.copy('C:\\Attack\\update\\Attack-master\\latest.txt', 'C:\\Attack\\')
 	shutil.rmtree('C:\\Attack\\temp\\')
 	shutil.rmtree('C:\\Attack\\update\\')
-	clr()
-	print("Please reopen the game.")
-	end()
+	if version < latest:
+		print("Updating...")
+		os.mkdir("C:\\Attack\\temp\\")
+		os.mkdir("C:\\Attack\\update\\")
+		urllib.request.urlretrieve('https://github.com/de-odex/Attack/archive/master.zip', 'C:\\Attack\\temp\\Attack_update.zip')
+		fullpathToZip = "C:\\Attack\\temp\\Attack_update.zip"
+		destinationPath = "C:\\Attack\\update"
+		sourceZip = zipfile.ZipFile(fullpathToZip, 'r')
+		for name in sourceZip.namelist():
+			if name.find('.py')!= -1:
+				sourceZip.extract(name, destinationPath)
+				sourceZip.close()
+		shutil.copy('C:\\Attack\\update\\Attack-master\\basegame.py', 'C:\\Attack\\')
+		shutil.rmtree('C:\\Attack\\temp\\')
+		shutil.rmtree('C:\\Attack\\update\\')
+		clr()
+		enter()
+	else:
+		print("You are running the latest version.")
 def game():
 	update()
 	print("Attack")
