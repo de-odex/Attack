@@ -73,7 +73,10 @@ def update():
 	latest = 0
 	os.mkdir("C:\\Attack\\temp\\")
 	os.mkdir("C:\\Attack\\update\\")
-	urllib.request.urlretrieve('https://github.com/de-odex/Attack/archive/master.zip', 'C:\\Attack\\temp\\Attack_update.zip')
+	try: 
+		urllib.request.urlretrieve('https://github.com/de-odex/Attack/archive/master.zip', 'C:\\Attack\\temp\\Attack_update.zip')
+	except:
+		print("No Internet.")
 	fullpathToZip = "C:\\Attack\\temp\\Attack_update.zip"
 	destinationPath = "C:\\Attack\\update"
 	sourceZip = zipfile.ZipFile(fullpathToZip, 'r')
@@ -724,3 +727,4 @@ def game():
 			save2(lvl)
 			save2(xplevel)
 			end()
+game()
