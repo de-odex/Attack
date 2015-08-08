@@ -69,7 +69,7 @@ def save1(var):
 	except IOError:
 		print("Unable to save.")
 def update():
-	readver(latest, 0)
+	latest = 0
 	os.mkdir("C:\\Attack\\temp\\")
 	os.mkdir("C:\\Attack\\update\\")
 	urllib.request.urlretrieve('https://github.com/de-odex/Attack/archive/master.zip', 'C:\\Attack\\temp\\Attack_update.zip')
@@ -83,6 +83,7 @@ def update():
 	shutil.copy('C:\\Attack\\update\\Attack-master\\latest.txt', 'C:\\Attack\\')
 	shutil.rmtree('C:\\Attack\\temp\\')
 	shutil.rmtree('C:\\Attack\\update\\')
+	readver(latest, 0)
 	if version < latest:
 		print("Updating...")
 		os.mkdir("C:\\Attack\\temp\\")
