@@ -34,6 +34,20 @@ def read1(var, line):
 	except:
 		print("v")
 	return var
+def readleg(var, line):
+	try:
+		readfile = open("install.txt", "r")
+		data = readfile.readlines()
+		var = int(data[line])
+		readfile.close()
+	except IOError:
+		print("a")
+	except ValueError:
+		print("e")
+		readfile1 = open("install.txt", "w")
+	except:
+		print("v")
+	return var
 def readver(var, line):
 	try:
 		readfile = open("latest.txt", "r")
@@ -105,6 +119,9 @@ def update():
 		shutil.rmtree('C:\\Attack\\temp\\')
 		shutil.rmtree('C:\\Attack\\update\\')
 		print("You are running the latest version.")
+if os.path.isfile('C:\Attack\install.txt'):
+	legit = 0
+	readleg(legit, 0)
 def game():
 	update()
 	print("Attack")
@@ -727,4 +744,8 @@ def game():
 			save2(lvl)
 			save2(xplevel)
 			end()
-game()
+if os.path.isfile('C:\\Attack\\basegame.py') and legit != 0:
+	game()
+else:
+	print("Please use the installer.")
+	end()
