@@ -66,7 +66,7 @@ def update():
 		if name.find('.py')!= -1:
 			sourceZip.extract(name, destinationPath)
 			sourceZip.close()
-	shutil.copy('C:\\Attack\\update\\Attack_master\\basegame.py', 'C:\\Attack\\')
+	shutil.copy('C:\\Attack\\update\\Attack-master\\basegame.py', 'C:\\Attack\\')
 	shutil.rmtree('C:\\Attack\\temp\\')
 	shutil.rmtree('C:\\Attack\\update\\')
 	clr()
