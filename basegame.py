@@ -2,8 +2,16 @@ import sys
 import random
 import os.path
 import os
+import urllib.request
+import zipfile
+import shutil
+#VERSION 0.4
 #the tattoos (;)
 #kim
+version=0.4
+alpha=0
+beta=0
+
 def end():
 	enter=input("Press Enter to continue...")
 	if enter == "":
@@ -46,7 +54,25 @@ def save1(var):
 			readfile.close()
 	except IOError:
 		print("Unable to save.")
+def update():
+	print("Updating...")
+	os.mkdir("C:\\Attack\\temp\\")
+	os.mkdir("C:\\Attack\\update\\")
+	urllib.request.urlretrieve('https://github.com/de-odex/Attack/archive/master.zip', 'C:\\Attack\\temp\\Attack_update.zip')
+	fullpathToZip = "C:\\Attack\\temp\\Attack_update.zip"
+	destinationPath = "C:\\Attack\\update"
+	sourceZip = zipfile.ZipFile(fullpathToZip, 'r')
+	for name in sourceZip.namelist():
+		if name.find('.py')!= -1:
+			sourceZip.extract(name, destinationPath)
+			sourceZip.close()
+	shutil.move('C:\\Attack\\update\\Attack_master\\basegame.py', 'C:\\Attack\\')
+	shutil.rmtree('C:\\Attack\\temp\\')
+	shutil.rmtree('C:\\Attack\\update\\')
+	clr()
+	print("Please restart the game.")
 def game():
+	update()
 	print("Attack")
 	print("Instructions: fight the enemy until you or he dies.")
 	print("This game autosaves. Do not close the game if you don't see <>.")
@@ -271,7 +297,7 @@ def game():
 					if item_number == 1:
 						clr()
 						print("You tried to drink an NRG drink!")
-						if random_number <= 60 and random_number >= 1:
+						if random_number <= 60 and random_number >= 1 and nrg > 0:
 							print("You restored your energy!")
 							attack1 = 10
 							attack2 = 30
@@ -279,19 +305,19 @@ def game():
 							attack4 = 5
 							nrg -= 1
 							turn = 0
-						elif random_number > 60 or nrg == 0 or attack1 == 10 or attack2 == 30 or attack3 == 30 or attack4 == 10:
+						elif random_number > 60 or nrg <= 0 or attack1 == 10 or attack2 == 30 or attack3 == 30 or attack4 == 10:
 							print("You failed to drink an NRG drink!")
 							turn = 0
 					elif item_number == 2:
 						clr()
 						print("You tried to heal!")
-						if random_number <= 80 and random_number >= 1:
+						if random_number <= 80 and random_number >= 1 and health < 100+healthmod and med > 0:
 							print("You healed up!")
 							health += 25
 							med -= 1
 							print("You have " + str(med) + " more medpacks")
 							turn = 0
-						elif random_number > 80 or med == 0:
+						elif random_number > 80 or med <= 0 or health >= 100+healthmod:
 							print("You failed to heal!")
 							print("You have " + str(med) + " more medpacks")
 							turn = 0
@@ -340,6 +366,8 @@ def game():
 						elif heal_price <= dollas:
 							dollas = dollas - heal_price
 							health = 100+healthmod
+							print("You used a full heal!")
+						turn = 0
 				elif input_number == 4:
 					clr()
 					print("Bye!")
@@ -532,7 +560,6 @@ def game():
 			ai_med=5
 			turn=1
 			kills=kills+1
-			xpadd=random.randint(5,20)
 			xp=xp+xpadd
 			save1(health)
 			save2(enemy)
