@@ -5,10 +5,10 @@ import os
 import urllib.request
 import zipfile
 import shutil
-#VERSION 0.4.2
+#VERSION 0.4.3
 #the tattoos (;)
 #kim
-version=42
+version=43
 alpha=0
 beta=0
 
@@ -69,6 +69,7 @@ def save1(var):
 	except IOError:
 		print("Unable to save.")
 def update():
+	print("Checking for updates...")
 	latest = 0
 	os.mkdir("C:\\Attack\\temp\\")
 	os.mkdir("C:\\Attack\\update\\")
