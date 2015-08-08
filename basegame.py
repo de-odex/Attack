@@ -66,11 +66,12 @@ def update():
 		if name.find('.py')!= -1:
 			sourceZip.extract(name, destinationPath)
 			sourceZip.close()
-	shutil.move('C:\\Attack\\update\\Attack_master\\basegame.py', 'C:\\Attack\\')
+	shutil.copy('C:\\Attack\\update\\Attack_master\\basegame.py', 'C:\\Attack\\')
 	shutil.rmtree('C:\\Attack\\temp\\')
 	shutil.rmtree('C:\\Attack\\update\\')
 	clr()
-	print("Please restart the game.")
+	print("Please reopen the game.")
+	end()
 def game():
 	update()
 	print("Attack")
