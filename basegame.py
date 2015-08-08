@@ -82,14 +82,9 @@ def update():
 			sourceZip.extract(name, destinationPath)
 			sourceZip.close()
 	shutil.copy('C:\\Attack\\update\\Attack-master\\latest.txt', 'C:\\Attack\\')
-	shutil.rmtree('C:\\Attack\\temp\\')
-	shutil.rmtree('C:\\Attack\\update\\')
 	readver(latest, 0)
 	if version < latest:
 		print("Updating...")
-		os.mkdir("C:\\Attack\\temp\\")
-		os.mkdir("C:\\Attack\\update\\")
-		urllib.request.urlretrieve('https://github.com/de-odex/Attack/archive/master.zip', 'C:\\Attack\\temp\\Attack_update.zip')
 		fullpathToZip = "C:\\Attack\\temp\\Attack_update.zip"
 		destinationPath = "C:\\Attack\\update"
 		sourceZip = zipfile.ZipFile(fullpathToZip, 'r')
@@ -103,6 +98,8 @@ def update():
 		clr()
 		enter()
 	else:
+		shutil.rmtree('C:\\Attack\\temp\\')
+		shutil.rmtree('C:\\Attack\\update\\')
 		print("You are running the latest version.")
 def game():
 	update()
