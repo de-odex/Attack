@@ -119,9 +119,7 @@ def update():
 		shutil.rmtree('C:\\Attack\\temp\\')
 		shutil.rmtree('C:\\Attack\\update\\')
 		print("You are running the latest version.")
-if os.path.isfile('C:\Attack\install.txt'):
-	legit = 0
-	readleg(legit, 0)
+
 def game():
 	update()
 	print("Attack")
@@ -744,6 +742,9 @@ def game():
 			save2(lvl)
 			save2(xplevel)
 			end()
+if os.path.isfile('C:\\Attack\\install.txt'):
+	legit = 0
+	legit = readleg(legit, 0)
 if os.path.isfile('C:\\Attack\\basegame.py') and legit != 0:
 	game()
 else:
