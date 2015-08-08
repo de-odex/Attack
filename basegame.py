@@ -121,7 +121,19 @@ def update():
 		print("You are running the latest version.")
 
 def game():
-	update()
+	upd8 = input("Do you want to update? (1/0): ")
+	try:
+		upd8 = int(upd8)
+	except ValueError:
+		clr()
+		print("Number please!")
+		upd8=1
+	if upd8 == 1:
+		clr()
+		update()
+	else:
+		enter()
+		clr()
 	print("Attack")
 	print("Instructions: fight the enemy until you or he dies.")
 	print("This game autosaves. Do not close the game if you don't see <>.")
