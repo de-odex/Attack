@@ -194,7 +194,7 @@ def game():
 					a=1
 					a=1
 					a=1
-					xplevel=xplevel+35+(5*level)
+					xplevel=xplevel+35+(5*lvl)
 				print("Hi! Stats:")
 				print("Your health is: {:2}".format(health))
 				print("The enemy's health is: {:2}".format(enemy))
