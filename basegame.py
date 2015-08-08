@@ -5,10 +5,10 @@ import os
 import urllib.request
 import zipfile
 import shutil
-#VERSION 0.4.4.0
+#VERSION 0.4.4.2
 #the tattoos (;)
 #kim
-version=440
+version=442
 alpha=0
 beta=0
 
@@ -137,7 +137,7 @@ def game():
 	print("Attack")
 	print("Instructions: fight the enemy until you or he dies.")
 	print("This game autosaves. Do not close the game if you don't see <>.")
-	print("Version " + version)
+	print("Version " + str(version))
 	done = False
 	lvl=0
 	health=100
