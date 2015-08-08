@@ -97,6 +97,7 @@ def update():
 		shutil.rmtree('C:\\Attack\\update\\')
 		clr()
 		enter()
+		update()
 	else:
 		shutil.rmtree('C:\\Attack\\temp\\')
 		shutil.rmtree('C:\\Attack\\update\\')
