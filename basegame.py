@@ -5,10 +5,10 @@ import os
 import urllib.request
 import zipfile
 import shutil
-#VERSION 0.4.3
+#VERSION 0.4.4.0
 #the tattoos (;)
 #kim
-version=43
+version=440
 alpha=0
 beta=0
 
