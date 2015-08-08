@@ -8,7 +8,7 @@ import shutil
 #VERSION 0.4.2
 #the tattoos (;)
 #kim
-version=0.42
+version=42
 alpha=0
 beta=0
 
@@ -41,12 +41,12 @@ def readver(var, line):
 		var = int(data[line])
 		readfile.close()
 	except IOError:
-		print("a")
+		print("!")
 	except ValueError:
-		print("e")
+		print("?")
 		readfile1 = open("latest.txt", "w")
 	except:
-		print("v")
+		print(";")
 	return var
 def save2(var):
 	try:
@@ -77,7 +77,7 @@ def update():
 	destinationPath = "C:\\Attack\\update"
 	sourceZip = zipfile.ZipFile(fullpathToZip, 'r')
 	for name in sourceZip.namelist():
-		if name.find('.txt')!= -1:
+		if name.find('latest.txt')!= -1:
 			sourceZip.extract(name, destinationPath)
 			sourceZip.close()
 	shutil.copy('C:\\Attack\\update\\Attack-master\\latest.txt', 'C:\\Attack\\')
