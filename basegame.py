@@ -5,10 +5,10 @@ import os
 import urllib.request
 import zipfile
 import shutil
-#VERSION 0.4.1
+#VERSION 0.4.2
 #the tattoos (;)
 #kim
-version=0.41
+version=0.42
 alpha=0
 beta=0
 
@@ -34,7 +34,7 @@ def read1(var, line):
 	except:
 		print("v")
 	return var
-def read1(var, line):
+def readver(var, line):
 	try:
 		readfile = open("latest.txt", "r")
 		data = readfile.readlines()
