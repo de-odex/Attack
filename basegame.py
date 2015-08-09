@@ -5,10 +5,10 @@ import os
 import urllib.request
 import zipfile
 import shutil
-#VERSION 0.4.5.1
+#VERSION 0.4.5.2
 #the tattoos (;)
 #kim
-version=451
+version=452
 alpha=0
 beta=0
 
@@ -41,12 +41,12 @@ def readleg(var, line):
 		var = int(data[line])
 		readfile.close()
 	except IOError:
-		print("a")
+		a=1
 	except ValueError:
-		print("e")
+		a=1
 		readfile1 = open("install.txt", "w")
 	except:
-		print("v")
+		a=1
 	return var
 def readver(var, line):
 	try:
