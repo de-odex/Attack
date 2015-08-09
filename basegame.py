@@ -5,10 +5,10 @@ import os
 import urllib.request
 import zipfile
 import shutil
-#VERSION 0.4.4.2
+#VERSION 0.4.5.0
 #the tattoos (;)
 #kim
-version=442
+version=450
 alpha=0
 beta=0
 
@@ -99,7 +99,7 @@ def update():
 			sourceZip.extract(name, destinationPath)
 			sourceZip.close()
 	shutil.copy('C:\\Attack\\update\\Attack-master\\latest.txt', 'C:\\Attack\\')
-	readver(latest, 0)
+	latest = readver(latest, 0)
 	if version < latest:
 		print("Updating...")
 		fullpathToZip = "C:\\Attack\\temp\\Attack_update.zip"
@@ -113,8 +113,8 @@ def update():
 		shutil.rmtree('C:\\Attack\\temp\\')
 		shutil.rmtree('C:\\Attack\\update\\')
 		clr()
+		print("Updated!")
 		enter()
-		update()
 	else:
 		shutil.rmtree('C:\\Attack\\temp\\')
 		shutil.rmtree('C:\\Attack\\update\\')
