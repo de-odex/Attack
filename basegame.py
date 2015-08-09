@@ -113,8 +113,8 @@ def update():
 		shutil.rmtree('C:\\Attack\\temp\\')
 		shutil.rmtree('C:\\Attack\\update\\')
 		clr()
-		print("Updated!")
-		enter()
+		print("Updated! Please reopen the game.")
+		end()
 	else:
 		shutil.rmtree('C:\\Attack\\temp\\')
 		shutil.rmtree('C:\\Attack\\update\\')
