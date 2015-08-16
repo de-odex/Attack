@@ -5,10 +5,10 @@ import os
 import urllib.request
 import zipfile
 import shutil
-#VERSION 0.4.5.2
+#VERSION 0.4.6
 #the tattoos (;)
 #kim
-version=452
+version=460
 alpha=0
 beta=0
 
@@ -83,6 +83,24 @@ def save1(var):
 	except IOError:
 		print("Unable to save.")
 def update():
+	print("Updating...")
+	fullpathToZip = "C:\\Attack\\temp\\Attack_update.zip"
+	destinationPath = "C:\\Attack\\update"
+	sourceZip = zipfile.ZipFile(fullpathToZip, 'r')
+	for name in sourceZip.namelist():
+		if name.find('.py')!= -1:
+			sourceZip.extract(name, destinationPath)
+			sourceZip.close()
+	shutil.copy('C:\\Attack\\update\\Attack-master\\basegame.py', 'C:\\Attack\\')
+	shutil.rmtree('C:\\Attack\\temp\\')
+	shutil.rmtree('C:\\Attack\\update\\')
+	clr()
+	print("Updated! Please reopen the game.")
+	end()
+def runlatest():
+	shutil.rmtree('C:\\Attack\\temp\\')
+	shutil.rmtree('C:\\Attack\\update\\')
+def check():
 	print("Checking for updates...")
 	latest = 0
 	os.mkdir("C:\\Attack\\temp\\")
@@ -101,39 +119,28 @@ def update():
 	shutil.copy('C:\\Attack\\update\\Attack-master\\latest.txt', 'C:\\Attack\\')
 	latest = readver(latest, 0)
 	if version < latest:
-		print("Updating...")
-		fullpathToZip = "C:\\Attack\\temp\\Attack_update.zip"
-		destinationPath = "C:\\Attack\\update"
-		sourceZip = zipfile.ZipFile(fullpathToZip, 'r')
-		for name in sourceZip.namelist():
-			if name.find('.py')!= -1:
-				sourceZip.extract(name, destinationPath)
-				sourceZip.close()
-		shutil.copy('C:\\Attack\\update\\Attack-master\\basegame.py', 'C:\\Attack\\')
-		shutil.rmtree('C:\\Attack\\temp\\')
-		shutil.rmtree('C:\\Attack\\update\\')
-		clr()
-		print("Updated! Please reopen the game.")
-		end()
+		return 1
 	else:
-		shutil.rmtree('C:\\Attack\\temp\\')
-		shutil.rmtree('C:\\Attack\\update\\')
-		print("You are running the latest version.")
-
+		return 0
 def game():
-	upd8 = input("Do you want to update? (1/0): ")
-	try:
-		upd8 = int(upd8)
-	except ValueError:
-		clr()
-		print("Number please!")
-		upd8=1
-	if upd8 == 1:
-		clr()
-		update()
+	chkupd = check()
+	if chkupd == 1:
+		upd8 = input("Do you want to update? (1/0): ")
+		try:
+			upd8 = int(upd8)
+		except ValueError:
+			clr()
+			print("Number please!")
+			upd8=1
+		if upd8 == 1:
+			clr()
+			update()
+		else:
+			enter()
+			clr()
 	else:
-		enter()
-		clr()
+		runlatest()
+		print("No updates detected.")
 	print("Attack")
 	print("Instructions: fight the enemy until you or he dies.")
 	print("This game autosaves. Do not close the game if you don't see <>.")
