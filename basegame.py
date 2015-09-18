@@ -6,6 +6,8 @@ import urllib.request
 import zipfile
 import shutil
 #VERSION 0.4.6
+#UNDER GPL V3 LICENSE
+#Check my github: https://github.com/de-odex/Attack
 #the tattoos (;)
 #kim
 version=460
