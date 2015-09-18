@@ -1,4 +1,8 @@
 # Attack
 simple attack game made with python
 
-Made by Justin Kyle Ramos
+Please verify the files you download
+
+basegame.py
+
+SHA1: e06395368e35633abd975db7b021eb43e615**** (dont use)
