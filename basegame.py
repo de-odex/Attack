@@ -1,10 +1,7 @@
 import os
 import os.path
 import random
-import shutil
 import sys
-import urllib.request
-import zipfile
 
 # VERSION 0.5.0
 # UNDER GPL V3 LICENSE
@@ -30,12 +27,16 @@ def clr():
 	os.system('cls')
 
 
-def read1(line):
+def read1(var, line):
 	try:
-		readfile = open("save.txt", "r")
-		data = readfile.readlines()
-		var = int(data[line])
-		readfile.close()
+		if os.path.isfile('C:\\Attack\\save.txt'):
+			readfile = open("save.txt", "r")
+			data = readfile.readlines()
+			var = int(data[line])
+			readfile.close()
+		else:
+			print("No save file!")
+			open("save.txt", "w")
 	except IOError:
 		print("a")
 	except ValueError:
@@ -57,22 +58,6 @@ def readleg(var, line):
 	except ValueError:
 		pass
 		open("install.txt", "w")
-	return var
-
-
-def readver(var, line):
-	try:
-		readfile = open("latest.txt", "r")
-		data = readfile.readlines()
-		var = int(data[line])
-		readfile.close()
-	except IOError:
-		print("!")
-	except ValueError:
-		print("?")
-		open("latest.txt", "w")
-	except:
-		print(";")
 	return var
 
 
@@ -98,52 +83,6 @@ def save1(var):
 			readfile.close()
 	except IOError:
 		print("Unable to save.")
-
-
-def update():
-	print("Updating...")
-	full_path_to_zip = "C:\\Attack\\temp\\Attack_update.zip"
-	destination_path = "C:\\Attack\\update"
-	source_zip = zipfile.ZipFile(full_path_to_zip, 'r')
-	for name in source_zip.namelist():
-		if name.find('.py') != -1:
-			source_zip.extract(name, destination_path)
-			source_zip.close()
-	shutil.copy('C:\\Attack\\update\\Attack-master\\basegame.py', 'C:\\Attack\\')
-	shutil.rmtree('C:\\Attack\\temp\\')
-	shutil.rmtree('C:\\Attack\\update\\')
-	clr()
-	print("Updated! Please reopen the game.")
-	end()
-
-
-def runlatest():
-	shutil.rmtree('C:\\Attack\\temp\\')
-	shutil.rmtree('C:\\Attack\\update\\')
-
-
-def check():
-	print("Checking for updates...")
-	latest = 0
-	os.mkdir("C:\\Attack\\temp\\")
-	os.mkdir("C:\\Attack\\update\\")
-	try:
-		urllib.request.urlretrieve('https://github.com/de-odex/Attack/archive/master.zip', 'C:\\Attack\\temp\\Attack_update.zip')
-	except:
-		print("No Internet.")
-	full_path_to_zip = "C:\\Attack\\temp\\Attack_update.zip"
-	destination_path = "C:\\Attack\\update"
-	source_zip = zipfile.ZipFile(full_path_to_zip, 'r')
-	for name in source_zip.namelist():
-		if name.find('latest.txt') != -1:
-			source_zip.extract(name, destination_path)
-			source_zip.close()
-	shutil.copy('C:\\Attack\\update\\Attack-master\\latest.txt', 'C:\\Attack\\')
-	latest = readver(latest, 0)
-	if version < latest:
-		return 1
-	else:
-		return 0
 
 
 def saveall():
@@ -219,28 +158,28 @@ def game():
 	kills = 0
 	xp = 0
 	xplevel = 50
-	lvl = read1(19)
-	health = read1(0)
-	enemy = read1(1)
-	dollas = read1(2)
-	med = read1(3)
-	nrg = read1(4)
-	attack1 = read1(5)
-	attack2 = read1(6)
-	attack3 = read1(7)
-	attack4 = read1(8)
-	ai_attack1 = read1(9)
-	ai_attack2 = read1(10)
-	ai_attack3 = read1(11)
-	ai_attack4 = read1(12)
-	ai_nrg = read1(13)
-	ai_med = read1(14)
-	turn = read1(15)
-	bank = read1(16)
-	kills = read1(17)
-	xp = read1(18)
-	xplevel = read1(20)
-	healthmod = 25 * lvl
+	lvl = read1(lvl, 19)
+	health = read1(health, 0)
+	enemy = read1(enemy, 1)
+	dollas = read1(dollas, 2)
+	med = read1(med, 3)
+	nrg = read1(nrg, 4)
+	attack1 = read1(attack1, 5)
+	attack2 = read1(attack2, 6)
+	attack3 = read1(attack3, 7)
+	attack4 = read1(attack4, 8)
+	ai_attack1 = read1(ai_attack1, 9)
+	ai_attack2 = read1(ai_attack2, 10)
+	ai_attack3 = read1(ai_attack3, 11)
+	ai_attack4 = read1(ai_attack4, 12)
+	ai_nrg = read1(ai_nrg, 13)
+	ai_med = read1(ai_med, 14)
+	turn = read1(turn, 15)
+	bank = read1(bank, 16)
+	kills = read1(kills, 17)
+	xp = read1(xp, 18)
+	xplevel = read1(xplevel, 20)
+	healthmod = 25 * int(lvl)
 	health = health + healthmod
 	if health > 100 + healthmod:
 		health = 100 + healthmod
