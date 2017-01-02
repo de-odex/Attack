@@ -1,28 +1,36 @@
-import sys
-import random
-import os.path
 import os
+import os.path
+import random
+import shutil
+import sys
 import urllib.request
 import zipfile
-import shutil
-#VERSION 0.4.6
-#UNDER GPL V3 LICENSE
-#Check my github: https://github.com/de-odex/Attack
-#the tattoos (;)
-#kim
-version=460
-alpha=0
-beta=0
 
+# VERSION 0.5.0
+# UNDER GPL V3 LICENSE
+# Check my github: https://github.com/de-odex/Attack
+# the tattoos (;)
+# kim
+version = 500
+alpha = 0
+beta = 0
+
+
+# functions
 def end():
-	enter=input("Press Enter to continue...")
-	if enter == "":
-		sys.exit()
+	input("Press Enter to continue...")
+	sys.exit()
+
+
 def enter():
-	enter1=input("Press Enter to continue...")
+	input("Press Enter to continue...")
+
+
 def clr():
 	os.system('cls')
-def read1(var, line):
+
+
+def read1(line):
 	try:
 		readfile = open("save.txt", "r")
 		data = readfile.readlines()
@@ -32,10 +40,12 @@ def read1(var, line):
 		print("a")
 	except ValueError:
 		print("e")
-		readfile1 = open("save.txt", "w")
+		open("save.txt", "w")
 	except:
 		print("v")
 	return var
+
+
 def readleg(var, line):
 	try:
 		readfile = open("install.txt", "r")
@@ -43,13 +53,13 @@ def readleg(var, line):
 		var = int(data[line])
 		readfile.close()
 	except IOError:
-		a=1
+		pass
 	except ValueError:
-		a=1
-		readfile1 = open("install.txt", "w")
-	except:
-		a=1
+		pass
+		open("install.txt", "w")
 	return var
+
+
 def readver(var, line):
 	try:
 		readfile = open("latest.txt", "r")
@@ -60,10 +70,12 @@ def readver(var, line):
 		print("!")
 	except ValueError:
 		print("?")
-		readfile1 = open("latest.txt", "w")
+		open("latest.txt", "w")
 	except:
 		print(";")
 	return var
+
+
 def save2(var):
 	try:
 		readfile = open("save.txt", "a")
@@ -71,10 +83,12 @@ def save2(var):
 		readfile.close()
 	except IOError:
 		print("Unable to save.")
+
+
 def save1(var):
 	try:
-		PATH = "./save.txt"
-		if os.path.isfile(PATH):
+		path = "./save.txt"
+		if os.path.isfile(path):
 			readfile = open("save.txt", "w")
 			readfile.write(str(var) + "\n")
 			readfile.close()
@@ -84,126 +98,162 @@ def save1(var):
 			readfile.close()
 	except IOError:
 		print("Unable to save.")
+
+
 def update():
 	print("Updating...")
-	fullpathToZip = "C:\\Attack\\temp\\Attack_update.zip"
-	destinationPath = "C:\\Attack\\update"
-	sourceZip = zipfile.ZipFile(fullpathToZip, 'r')
-	for name in sourceZip.namelist():
-		if name.find('.py')!= -1:
-			sourceZip.extract(name, destinationPath)
-			sourceZip.close()
+	full_path_to_zip = "C:\\Attack\\temp\\Attack_update.zip"
+	destination_path = "C:\\Attack\\update"
+	source_zip = zipfile.ZipFile(full_path_to_zip, 'r')
+	for name in source_zip.namelist():
+		if name.find('.py') != -1:
+			source_zip.extract(name, destination_path)
+			source_zip.close()
 	shutil.copy('C:\\Attack\\update\\Attack-master\\basegame.py', 'C:\\Attack\\')
 	shutil.rmtree('C:\\Attack\\temp\\')
 	shutil.rmtree('C:\\Attack\\update\\')
 	clr()
 	print("Updated! Please reopen the game.")
 	end()
+
+
 def runlatest():
 	shutil.rmtree('C:\\Attack\\temp\\')
 	shutil.rmtree('C:\\Attack\\update\\')
+
+
 def check():
 	print("Checking for updates...")
 	latest = 0
 	os.mkdir("C:\\Attack\\temp\\")
 	os.mkdir("C:\\Attack\\update\\")
-	try: 
+	try:
 		urllib.request.urlretrieve('https://github.com/de-odex/Attack/archive/master.zip', 'C:\\Attack\\temp\\Attack_update.zip')
 	except:
 		print("No Internet.")
-	fullpathToZip = "C:\\Attack\\temp\\Attack_update.zip"
-	destinationPath = "C:\\Attack\\update"
-	sourceZip = zipfile.ZipFile(fullpathToZip, 'r')
-	for name in sourceZip.namelist():
-		if name.find('latest.txt')!= -1:
-			sourceZip.extract(name, destinationPath)
-			sourceZip.close()
+	full_path_to_zip = "C:\\Attack\\temp\\Attack_update.zip"
+	destination_path = "C:\\Attack\\update"
+	source_zip = zipfile.ZipFile(full_path_to_zip, 'r')
+	for name in source_zip.namelist():
+		if name.find('latest.txt') != -1:
+			source_zip.extract(name, destination_path)
+			source_zip.close()
 	shutil.copy('C:\\Attack\\update\\Attack-master\\latest.txt', 'C:\\Attack\\')
 	latest = readver(latest, 0)
 	if version < latest:
 		return 1
 	else:
 		return 0
+
+
+def saveall():
+	save1(health)
+	save2(enemy)
+	save2(dollas)
+	save2(med)
+	save2(nrg)
+	save2(attack1)
+	save2(attack2)
+	save2(attack3)
+	save2(attack4)
+	save2(ai_attack1)
+	save2(ai_attack2)
+	save2(ai_attack3)
+	save2(ai_attack4)
+	save2(ai_nrg)
+	save2(ai_med)
+	save2(turn)
+	save2(bank)
+	save2(kills)
+	save2(xp)
+	save2(lvl)
+	save2(xplevel)
+
+
+# game
 def game():
-	chkupd = check()
-	if chkupd == 1:
-		upd8 = input("Do you want to update? (1/0): ")
-		try:
-			upd8 = int(upd8)
-		except ValueError:
-			clr()
-			print("Number please!")
-			upd8=1
-		if upd8 == 1:
-			clr()
-			update()
-		else:
-			enter()
-			clr()
-	else:
-		runlatest()
-		print("No updates detected.")
 	print("Attack")
 	print("Instructions: fight the enemy until you or he dies.")
 	print("This game autosaves. Do not close the game if you don't see <>.")
 	print("Version " + str(version))
 	done = False
-	lvl=0
-	health=100
-	enemy=100
-	dollas=0
-	med=5
-	nrg=3
-	attack1=10
-	attack2=30
-	attack3=30
-	attack4=5
-	ai_attack1=10
-	ai_attack2=30
-	ai_attack3=30
-	ai_attack4=5
-	ai_nrg=3
-	ai_med=5
-	turn=1
-	bank=0
-	kills=0
-	xp=0
-	xplevel=50
-	lvl = read1(lvl, 19)
-	health = read1(health, 0)
-	enemy = read1(enemy, 1)
-	dollas = read1(dollas, 2)
-	med = read1(med, 3)
-	nrg = read1(nrg, 4)
-	attack1 = read1(attack1, 5)
-	attack2 = read1(attack2, 6)
-	attack3 = read1(attack3, 7)
-	attack4 = read1(attack4, 8)
-	ai_attack1 = read1(ai_attack1, 9)
-	ai_attack2 = read1(ai_attack2, 10)
-	ai_attack3 = read1(ai_attack3, 11)
-	ai_attack4 = read1(ai_attack4, 12)
-	ai_nrg = read1(ai_nrg, 13)
-	ai_med = read1(ai_med, 14)
-	turn = read1(turn, 15)
-	bank = read1(bank, 16)
-	kills = read1(kills, 17)
-	xp = read1(xp, 18)
-	xplevel = read1(xplevel, 20)
-	healthmod=25*lvl
-	health=health+healthmod
-	if health > 100+healthmod:
-		health=100+healthmod
-		enemy=100
+	global health
+	global enemy
+	global dollas
+	global med
+	global nrg
+	global attack1
+	global attack2
+	global attack3
+	global attack4
+	global ai_attack1
+	global ai_attack2
+	global ai_attack3
+	global ai_attack4
+	global ai_nrg
+	global ai_med
+	global turn
+	global bank
+	global kills
+	global xp
+	global lvl
+	global xplevel
+	lvl = 0
+	health = 100
+	enemy = 100
+	dollas = 0
+	med = 5
+	nrg = 3
+	attack1 = 10
+	attack2 = 30
+	attack3 = 30
+	attack4 = 5
+	ai_attack1 = 10
+	ai_attack2 = 30
+	ai_attack3 = 30
+	ai_attack4 = 5
+	ai_nrg = 3
+	ai_med = 5
+	turn = 1
+	bank = 0
+	kills = 0
+	xp = 0
+	xplevel = 50
+	lvl = read1(19)
+	health = read1(0)
+	enemy = read1(1)
+	dollas = read1(2)
+	med = read1(3)
+	nrg = read1(4)
+	attack1 = read1(5)
+	attack2 = read1(6)
+	attack3 = read1(7)
+	attack4 = read1(8)
+	ai_attack1 = read1(9)
+	ai_attack2 = read1(10)
+	ai_attack3 = read1(11)
+	ai_attack4 = read1(12)
+	ai_nrg = read1(13)
+	ai_med = read1(14)
+	turn = read1(15)
+	bank = read1(16)
+	kills = read1(17)
+	xp = read1(18)
+	xplevel = read1(20)
+	healthmod = 25 * lvl
+	health = health + healthmod
+	if health > 100 + healthmod:
+		health = 100 + healthmod
+		enemy = 100
 	if attack1 > 10 or attack2 > 30 or attack3 > 30 or attack4 > 5:
-		attack1=10
-		attack2=30
-		attack3=30
-		attack4=5
-		ai_attack1=10
-		ai_attack2=30
-		ai_attack3=30
-		ai_attack4=5
+		attack1 = 10
+		attack2 = 30
+		attack3 = 30
+		attack4 = 5
+		ai_attack1 = 10
+		ai_attack2 = 30
+		ai_attack3 = 30
+		ai_attack4 = 5
 	while not done:
 		while health > 0 and enemy > 0:
 			while turn == 1:
@@ -211,20 +261,20 @@ def game():
 				enter()
 				clr()
 				if xp >= xplevel:
-					lvl = lvl+1
-					xp=xp-xplevel
-					a=1
-					a=1
-					a=1
-					xplevel=xplevel+35+(5*lvl)
+					lvl = lvl + 1
+					xp = xp - xplevel
+					pass
+					pass
+					pass
+					xplevel = xplevel + 35 + (5 * lvl)
 				print("Hi! Stats:")
 				print("Your health is: {:2}".format(health))
 				print("The enemy's health is: {:2}".format(enemy))
 				print("You're at level {:}".format(lvl))
 				print("You have {:}/{:} xp".format(xp, xplevel))
-				percent = xp/xplevel
+				percent = xp / xplevel
 				percent = round(percent, 3)
-				percent = percent*100
+				percent = percent * 100
 				if percent > 90:
 					print("<---------|>")
 				elif percent > 80 and percent <= 90:
@@ -254,27 +304,7 @@ def game():
 				print("You have {:2} energy for attack 3".format(attack3))
 				print("You have {:2} energy for attack 4".format(attack4))
 				print("You killed {:} people".format(kills))
-				save1(health)
-				save2(enemy)
-				save2(dollas)
-				save2(med)
-				save2(nrg)
-				save2(attack1)
-				save2(attack2)
-				save2(attack3)
-				save2(attack4)
-				save2(ai_attack1)
-				save2(ai_attack2)
-				save2(ai_attack3)
-				save2(ai_attack4)
-				save2(ai_nrg)
-				save2(ai_med)
-				save2(turn)
-				save2(bank)
-				save2(kills)
-				save2(xp)
-				save2(lvl)
-				save2(xplevel)
+				saveall()
 				print("<>")
 				input_number = input("Attack, use items, buy, or exit (1, 2, 3, or 4 respectively): ")
 				try:
@@ -309,11 +339,11 @@ def game():
 							print("You hit him with your backup attack!")
 							enemy = enemy - 5
 							print("It caused 5 damage!")
-							attack1-=1
+							attack1 -= 1
 							turn = 0
 						elif random_number >= 80:
 							print("You missed!")
-							attack1-=1
+							attack1 -= 1
 							turn = 0
 					elif attack_number == 2 and attack2 >= 1:
 						clr()
@@ -322,11 +352,11 @@ def game():
 							print("You hit him with your hard-hitting attack!")
 							enemy = enemy - hhit_attack
 							print("It caused " + str(hhit_attack) + " damage!")
-							attack2-=1
+							attack2 -= 1
 							turn = 0
 						elif random_number >= 40:
 							print("You missed!")
-							attack2-=1
+							attack2 -= 1
 							turn = 0
 					elif attack_number == 3 and attack3 >= 1:
 						clr()
@@ -335,11 +365,11 @@ def game():
 							print("You hit him with your normal attack!")
 							enemy = enemy - nrm_attack
 							print("It caused " + str(nrm_attack) + " damage!")
-							attack3-=1
+							attack3 -= 1
 							turn = 0
 						elif random_number >= 60:
 							print("You missed!")
-							attack3-=1
+							attack3 -= 1
 							turn = 0
 					elif attack_number == 4 and attack4 >= 1:
 						clr()
@@ -348,11 +378,11 @@ def game():
 							print("You hit him with your special attack!")
 							enemy = enemy - spcl_attack
 							print("It caused " + str(spcl_attack) + " damage!")
-							attack4-=1
+							attack4 -= 1
 							turn = 0
 						elif random_number >= 20:
 							print("You missed!")
-							attack4-=1
+							attack4 -= 1
 							turn = 0
 				elif input_number == 2:
 					clr()
@@ -382,13 +412,13 @@ def game():
 					elif item_number == 2:
 						clr()
 						print("You tried to heal!")
-						if random_number <= 80 and random_number >= 1 and health < 100+healthmod and med > 0:
+						if random_number <= 80 and random_number >= 1 and health < 100 + healthmod and med > 0:
 							print("You healed up!")
 							health += 25
 							med -= 1
 							print("You have " + str(med) + " more medpacks")
 							turn = 0
-						elif random_number > 80 or med <= 0 or health >= 100+healthmod:
+						elif random_number > 80 or med <= 0 or health >= 100 + healthmod:
 							print("You failed to heal!")
 							print("You have " + str(med) + " more medpacks")
 							turn = 0
@@ -436,7 +466,7 @@ def game():
 							print("Not enough money!")
 						elif heal_price <= dollas:
 							dollas = dollas - heal_price
-							health = 100+healthmod
+							health = 100 + healthmod
 							print("You used a full heal!")
 						turn = 0
 				elif input_number == 4:
@@ -452,27 +482,27 @@ def game():
 				event = random.randint(1, 100)
 				if ai_number == 1:
 					if ai_attack == 1 and ai_attack1 < 1:
-						a=1
+						pass
 						turn = 0
 					elif ai_attack == 2 and ai_attack2 < 1:
-						a=1
+						pass
 						turn = 0
 					elif ai_attack == 3 and ai_attack3 < 1:
-						a=1
+						pass
 						turn = 0
 					elif ai_attack == 4 and ai_attack4 < 1 and enemy > 15:
-						a=1
+						pass
 						turn = 0
 					elif ai_attack == 1 and ai_attack1 >= 1 and ai_attack2 == 0 and ai_attack3 == 0 and ai_attack4 == 0:
 						if event < 80 and event >= 1:
 							print("He hit you with his backup attack!")
 							health = health - 5
 							print("It caused 5 damage!")
-							ai_attack1-=1
+							ai_attack1 -= 1
 							turn = 1
 						elif event >= 80:
 							print("He missed!")
-							ai_attack1-=1
+							ai_attack1 -= 1
 							turn = 1
 					elif ai_attack == 2 and ai_attack2 >= 1:
 						if event < 40 and event >= 1:
@@ -480,11 +510,11 @@ def game():
 							print("He hit you with his hard-hitting attack!")
 							health = health - ai_hhit_attack
 							print("It caused " + str(ai_hhit_attack) + " damage!")
-							ai_attack2-=1
+							ai_attack2 -= 1
 							turn = 1
 						elif event >= 40:
 							print("He missed!")
-							ai_attack2-=1
+							ai_attack2 -= 1
 							turn = 1
 					elif ai_attack == 3 and ai_attack3 >= 1:
 						if event < 60 and event >= 1:
@@ -492,11 +522,11 @@ def game():
 							print("He hit you with his normal attack!")
 							health = health - ai_nrm_attack
 							print("It caused " + str(ai_nrm_attack) + " damage!")
-							ai_attack3-=1
+							ai_attack3 -= 1
 							turn = 1
 						elif event >= 60:
 							print("He missed!")
-							ai_attack3-=1
+							ai_attack3 -= 1
 							turn = 1
 					elif ai_attack == 4 and ai_attack4 >= 1 and enemy <= 15:
 						if event < 20 and event >= 1:
@@ -504,11 +534,11 @@ def game():
 							print("He hit you with his special attack!")
 							health = health - ai_spcl_attack
 							print("It caused " + str(ai_spcl_attack) + " damage!")
-							ai_attack4-=1
+							ai_attack4 -= 1
 							turn = 1
 						elif event >= 20:
 							print("He missed!")
-							ai_attack4-=1
+							ai_attack4 -= 1
 							turn = 1
 				elif ai_number == 2 and enemy <= 15 and ai_med > 0 and ai_item == 1 and enemy <= 15:
 					ai_med -= 1
@@ -522,137 +552,77 @@ def game():
 					ai_attack4 = 5
 					turn = 1
 				elif ai_number == 2:
-					a=1
+					pass
 					turn = 0
 		if health <= 0 and bank >= -500:
 			print("You blacked out!")
 			print("The hospital healed you back up!")
-			health=100
-			enemy=100
-			dollas=0
-			med=5
-			nrg=3
-			attack1=10
-			attack2=30
-			attack3=30
-			attack4=5
-			ai_attack1=10
-			ai_attack2=30
-			ai_attack3=30
-			ai_attack4=5
-			ai_nrg=3
-			ai_med=5
-			turn=1
+			health = 100
+			enemy = 100
+			dollas = 0
+			med = 5
+			nrg = 3
+			attack1 = 10
+			attack2 = 30
+			attack3 = 30
+			attack4 = 5
+			ai_attack1 = 10
+			ai_attack2 = 30
+			ai_attack3 = 30
+			ai_attack4 = 5
+			ai_nrg = 3
+			ai_med = 5
+			turn = 1
 			bank = bank - 250
-			save1(health)
-			save2(enemy)
-			save2(dollas)
-			save2(med)
-			save2(nrg)
-			save2(attack1)
-			save2(attack2)
-			save2(attack3)
-			save2(attack4)
-			save2(ai_attack1)
-			save2(ai_attack2)
-			save2(ai_attack3)
-			save2(ai_attack4)
-			save2(ai_nrg)
-			save2(ai_med)
-			save2(turn)
-			save2(bank)
-			save2(kills)
-			save2(xp)
-			save2(lvl)
-			save2(xplevel)
-			health=health+healthmod
+			saveall()
+			health = health + healthmod
 		elif lvl >= 50:
 			print("You win!")
 			print("Game over!")
-			health=100
-			enemy=100
-			dollas=0
-			med=5
-			nrg=3
-			attack1=10
-			attack2=30
-			attack3=30
-			attack4=5
-			ai_attack1=10
-			ai_attack2=30
-			ai_attack3=30
-			ai_attack4=5
-			ai_nrg=3
-			ai_med=5
-			turn=1
-			bank=0
-			kills=0
-			xp=0
-			lvl=0
-			xplevel=50
-			amazingfeat=9001
-			save1(health)
-			save2(enemy)
-			save2(dollas)
-			save2(med)
-			save2(nrg)
-			save2(attack1)
-			save2(attack2)
-			save2(attack3)
-			save2(attack4)
-			save2(ai_attack1)
-			save2(ai_attack2)
-			save2(ai_attack3)
-			save2(ai_attack4)
-			save2(ai_nrg)
-			save2(ai_med)
-			save2(turn)
-			save2(bank)
-			save2(kills)
-			save2(xp)
-			save2(lvl)
-			save2(xplevel)
+			health = 100
+			enemy = 100
+			dollas = 0
+			med = 5
+			nrg = 3
+			attack1 = 10
+			attack2 = 30
+			attack3 = 30
+			attack4 = 5
+			ai_attack1 = 10
+			ai_attack2 = 30
+			ai_attack3 = 30
+			ai_attack4 = 5
+			ai_nrg = 3
+			ai_med = 5
+			turn = 1
+			bank = 0
+			kills = 0
+			xp = 0
+			lvl = 0
+			xplevel = 50
+			amazingfeat = 9001
+			saveall()
 			save2(amazingfeat)
 			end()
 		elif enemy <= 0 and health > 0:
 			print("You killed him!")
-			mons=random.randint(600,1000)
-			xpadd=random.randint(20,30)
+			mons = random.randint(600, 1000)
+			xpadd = random.randint(20, 30)
 			print("You gained " + str(mons) + " money!")
 			print("You gained " + str(xpadd) + " xp!")
 			print("Another person approaches you!")
-			enemy=100
-			dollas=dollas+mons
-			ai_attack1=10
-			ai_attack2=30
-			ai_attack3=30
-			ai_attack4=5
-			ai_nrg=3
-			ai_med=5
-			turn=1
-			kills=kills+1
-			xp=xp+xpadd
-			save1(health)
-			save2(enemy)
-			save2(dollas)
-			save2(med)
-			save2(nrg)
-			save2(attack1)
-			save2(attack2)
-			save2(attack3)
-			save2(attack4)
-			save2(ai_attack1)
-			save2(ai_attack2)
-			save2(ai_attack3)
-			save2(ai_attack4)
-			save2(ai_nrg)
-			save2(ai_med)
-			save2(turn)
-			save2(bank)
-			save2(kills)
-			save2(xp)
-			save2(lvl)
-			save2(xplevel)
+			enemy = 100
+			dollas = dollas + mons
+			ai_attack1 = 10
+			ai_attack2 = 30
+			ai_attack3 = 30
+			ai_attack4 = 5
+			ai_nrg = 3
+			ai_med = 5
+			turn = 1
+			kills = kills + 1
+			xp = xp + xpadd
+			saveall()
 			enter()
 			binp = input("Do you want to bank your money? (1/0): ")
 			try:
@@ -660,7 +630,7 @@ def game():
 			except ValueError:
 				clr()
 				print("Number please!")
-				binp=1
+				binp = 1
 			if binp == 1:
 				clr()
 				dorw = input("Deposit or withdraw? (1/2): ")
@@ -669,7 +639,7 @@ def game():
 				except ValueError:
 					clr()
 					print("Number please!")
-					dorw=1
+					dorw = 1
 				if dorw == 1:
 					clr()
 					print("You have {:} dollars".format(dollas))
@@ -681,18 +651,18 @@ def game():
 					try:
 						depamt = int(depamt)
 					except ValueError:
-						depamt=recdep
-					if depamt>dollas:
+						depamt = recdep
+					if depamt > dollas:
 						print("Too much! Depositing all!")
 						print("Depositing money...")
-						bank=bank+dollas
-						bank=bank-15
-						dollas=0
+						bank = bank + dollas
+						bank = bank - 15
+						dollas = 0
 					else:
-						dollas=dollas-depamt
+						dollas = dollas - depamt
 						print("Depositing money...")
-						bank=bank+depamt
-						bank=bank-15
+						bank = bank + depamt
+						bank = bank - 15
 				elif dorw == 2:
 					clr()
 					print("You have {:} dollars".format(dollas))
@@ -706,69 +676,53 @@ def game():
 					except ValueError:
 						clr()
 						print("Number please!")
-					if wthamt>bank:
+					if wthamt > bank:
 						print("Too much! Withdrawing all!")
 						print("Withdrawing money...")
-						dollas=dollas+bank
-						bank=0
+						dollas = dollas + bank
+						bank = 0
 					else:
-						bank=bank-wthamt
+						bank = bank - wthamt
 						print("Withdrawing money...")
-						dollas=dollas+wthamt
+						dollas = dollas + wthamt
 			else:
 				print("OK!")
 		elif health <= 0 and enemy > 0 and bank < -500:
 			print("You died!")
 			print("No money!")
 			print("Game over!")
-			health=100
-			enemy=100
-			dollas=0
-			med=5
-			nrg=3
-			attack1=10
-			attack2=30
-			attack3=30
-			attack4=5
-			ai_attack1=10
-			ai_attack2=30
-			ai_attack3=30
-			ai_attack4=5
-			ai_nrg=3
-			ai_med=5
-			turn=1
-			bank=0
-			kills=0
-			xp=0
-			lvl=0
-			xplevel=50
-			save1(health)
-			save2(enemy)
-			save2(dollas)
-			save2(med)
-			save2(nrg)
-			save2(attack1)
-			save2(attack2)
-			save2(attack3)
-			save2(attack4)
-			save2(ai_attack1)
-			save2(ai_attack2)
-			save2(ai_attack3)
-			save2(ai_attack4)
-			save2(ai_nrg)
-			save2(ai_med)
-			save2(turn)
-			save2(bank)
-			save2(kills)
-			save2(xp)
-			save2(lvl)
-			save2(xplevel)
+			health = 100
+			enemy = 100
+			dollas = 0
+			med = 5
+			nrg = 3
+			attack1 = 10
+			attack2 = 30
+			attack3 = 30
+			attack4 = 5
+			ai_attack1 = 10
+			ai_attack2 = 30
+			ai_attack3 = 30
+			ai_attack4 = 5
+			ai_nrg = 3
+			ai_med = 5
+			turn = 1
+			bank = 0
+			kills = 0
+			xp = 0
+			lvl = 0
+			xplevel = 50
+			saveall()
 			end()
-if os.path.isfile('C:\\Attack\\install.txt'):
-	legit = 0
-	legit = readleg(legit, 0)
-if os.path.isfile('C:\\Attack\\basegame.py') and legit != 0:
-	game()
-else:
-	print("Please use the installer.")
-	end()
+
+
+def main():
+	if os.path.isfile('C:\\Attack\\install.txt'):
+		legit = 0
+		legit = readleg(legit, 0)
+		print("Legitimate installation!")
+	if legit != 0:
+		game()
+	else:
+		print("Please use the installer.")
+		end()
